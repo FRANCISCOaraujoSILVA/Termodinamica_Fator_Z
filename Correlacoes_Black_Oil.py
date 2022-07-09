@@ -18,17 +18,22 @@ def correlacao_de_Brill_e_Beggs(Ppr, Tpr):
     return Z
 
 
-def correlacao_Papay(Ppr, Tpr):
+def correlacao_Papay(Ppr, Tpr):  # Essa correlação é simples mas tem suas limitações
     """
     :param Ppr: Pressão pseudoreduzida [adimensional]
     :param Tpr: Temperatura pseudocrítica [adimensional]
     :return: Fator de compressibilidade do gás
+
+    <Tpr<
+    <Ppr<
+
+    Desvantagens:
     """
     Z = 1 - ((3.53 * Ppr)/(10**(0.9813 * Tpr))) + ((0.274 * Ppr**2)/(10**(0.8157 * Tpr)))
     return Z
 
 
-def correlacao_de_Hall_Yarborough(Ppr, Tpr, x0):
+def correlacao_de_Hall_Yarborough(Ppr, Tpr, x0):  # rever essas fórmulas, deu muito errado em um exemplo
     """
     :param Ppr: Pressão pseudoreduzida [adimensional]
     :param Tpr: Temperatura pseudocrítica [adimensional]
@@ -42,16 +47,16 @@ def correlacao_de_Hall_Yarborough(Ppr, Tpr, x0):
 
     A = 14.7 * Tpr - 9.76 * Tpr**2 + 4.58 * Tpr**3
     B = 90.7 * Tpr - 242.2 * Tpr**2 + 42.4 * Tpr**3
-    F = lambda y: - 0.06125 * Ppr * Tpr * M.exp(-1.2 * (1-Tpr)**2) + ((y + y**2 + y**3 - y**4)/(1 - y)**3) -\
+    F = lambda y: -0.06125 * Ppr * Tpr * M.exp(-1.2 * (1-Tpr)**2) + ((y + y**2 + y**3 - y**4)/(1 - y)**3) -\
                   A * y**2 + B * y**(1.18 + 2.82 * Tpr)
 
     Pert = 10**-6  # pertubation
-    Parad = 10**-4  # Stop's Criterion
+    Parad = 10**-6  # Stop's Criterion
 
     while True:
         xold = x0
-        x0 = xold - ((Pert * xold * F(xold))/(F(xold + Pert * xold) - F(x0)))
-        Erro = ((xold - x0)/xold) * 100
+        x0 = xold - ((Pert * xold * F(xold)) / (F(xold + Pert * xold) - F(x0)))
+        Erro = ((xold - x0) / xold)
         if Erro <= Parad:
             break
 
@@ -74,15 +79,14 @@ def correlacao_dranchukabukassem(Ppr, Tpr, zc, x0):
         A10 * (1 + A11 * ((zc * Ppr)/(z * Tpr))**2) * ((((zc * Ppr)/(z * Tpr))**2) * M.exp(-A11 * ((zc * Ppr)/(z * Tpr))**2))/(Tpr**3) - z
 
     Pert = 10 ** -6  # pertubation
-    Parad = 10 ** -4  # Stop's Criterion
+    Parad = 10 ** -6  # Stop's Criterion
 
     while True:
         xold = x0
         x0 = xold - ((Pert * xold * F(xold)) / (F(xold + Pert * xold) - F(x0)))
-        Erro = ((xold - x0) / xold) * 100  # verificar se o erro deve estar em porcentagem ou se é muito grande
+        Erro = ((xold - x0) / xold)  # verificar se o erro deve estar em porcentagem ou se é muito grande
         if Erro <= Parad:
             break
-
     z = x0
     return z
 
