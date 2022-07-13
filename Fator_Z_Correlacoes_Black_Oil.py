@@ -63,8 +63,8 @@ def correlacao_de_Hall_Yarborough(Ppr, Tpr):
     # Transformando a função numericamente
     fy = lambda Y: - X1 * Ppr + ((Y + Y**2 + Y**3 - Y**4) / (1 - Y)**3) - X2 * Y**2 + X3 * Y**(X4)
 
-    parad = 0.0000001
-    maxit = 500
+    parad = 0.00000000001
+    maxit = 50000
     iter = 0
     xr = 0.1  # 1ºchute
 
@@ -97,9 +97,9 @@ def correlacao_dranchukabukassem(Ppr, Tpr, zc, x0):
                               (((zc * Ppr) / (z * Tpr)) ** 2) * M.exp(-A11 * ((zc * Ppr) / (z * Tpr)) ** 2)) / (
                               Tpr ** 3) - z
 
-    Pert = 10 ** -6  # pertubation
-    Parad = 10 ** -7  # Stop's Criterion
-    maxit = 500
+    Pert = 10 ** -6
+    Parad = 10 ** -11
+    maxit = 50000
     iter = 0
 
     while True:

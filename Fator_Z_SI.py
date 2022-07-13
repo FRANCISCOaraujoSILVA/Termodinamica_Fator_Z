@@ -1,8 +1,15 @@
 from Fator_Z_Correlacoes_Black_Oil import *
-
+variavel = 'variavel'
 dg = float(input('SE A GRAVIDADE ESPECÍFICA (DG) FOR CONHECIDA INFORME SEU VALOR! CASO CONTRÁRIO, DIGITE "0">> '))
 
-if dg != 0:
+if dg != 0 and variavel == 'variavel':
+    if dg < 0.75:  # gás seco
+        Ppc = (677 + 15 * dg - 37.5 * dg ** 2) * 6894.76  # Pa
+        Tpc = (168 + 325 * dg - 12.5 * dg ** 2) * 0.5556  # K
+    else:
+        Ppc = (706 - 51.7 * dg - 11.1 * dg ** 2) * 6894.76  # gás úmido
+        Tpc = (187 + 330 * dg - 71.5 * dg ** 2) * 0.5556
+else:
     if dg < 0.75:  # gás seco
         Ppc = (677 + 15 * dg - 37.5 * dg ** 2) * 6894.76  # Pa
         Tpc = (168 + 325 * dg - 12.5 * dg ** 2) * 0.5556  # K
@@ -16,6 +23,8 @@ if dg == 0:
         Qnt = int(input('INFORME A QUANTIDADE DE COMPONENTES>> '))
         unidade = input('UNIDADE DA MASSA MOLAR (MM): "kg/mol" ou "lb/mol">> ').upper()
         MMT = 0
+        MM = 0
+        yi = 0
         for i in range(0, Qnt):
             if unidade == "LB/MOL":
                 MM = float(input(f'INFORME A MASSA MOLAR DO {i + 1}° COMPONENTE>> '))
@@ -29,7 +38,7 @@ if dg == 0:
         yi = input('INSIRA AS FRAÇÕES MOLARES SEPARADAS POR ESPAÇO>> ').split(' ')
         yi = [float(dado) for dado in yi]
         TC = input('INSIRA AS TEMPERATURAS CRÍTICAS SEPARADAS POR ESPAÇO>> ').split(' ')
-        unit_Tc = input('INFORME A UNIDADE (K, C, R OU F)>> ')
+        unit_Tc = input('INFORME A UNIDADE (K, C, R OU F)>> ').upper()
         if unit_Tc.upper() == "C":
             unit_Tc = [float(dados)+274.15 for dados in TC]
         elif unit_Tc.upper() == "R":
@@ -40,7 +49,7 @@ if dg == 0:
             unit_Tc = [float(dados) * 1 for dados in TC]
         # CONVERSÕES PARA K
         PC = input('INSIRA AS PRESSÕES CRÍTICAS P1 P2 P3>> ').split(' ')
-        unit_Pc = input('INFORME A UNIDADE (Bar Pa Atm Torr mmHg Kgf/cm² Kgf/in² ou Psi)>> ')
+        unit_Pc = input('INFORME A UNIDADE (Bar Pa Atm Torr mmHg Kgf/cm² Kgf/in² ou Psi)>> ').upper()
         if unit_Pc.upper() == "BAR":
             unit_Pc = [float(dados) * 100_000 for dados in PC]
         elif unit_Pc.upper() == "PA":
@@ -75,7 +84,8 @@ if Ci == "S":
     Ppc = Ppc + 440 * YCO2 + 600 * YH2S - 170 * YN2
     Tpc = Tpc - 80 * YCO2 + 130 * YH2S - 250 * YN2
 
-Tabs = input('INFORME A TEMPERATURA ABSOLUTA (K, C, R OU F) SEGUIDA COM A SIGLA E SEPERADOS POR ESPAÇO>> ').split(' ')
+Tabs = input('INFORME A TEMPERATURA ABSOLUTA (K, C, R OU F) SEGUIDA COM A SIGLA E SEPERADOS POR ESPAÇO>> ').upper()\
+    .split(' ')
 if Tabs[1].upper() == "C":
     Tabs = float(Tabs[0]) + 273.15
 elif Tabs[1].upper() == "R":
@@ -86,7 +96,7 @@ elif Tabs[1].upper() == "K":
     Tabs = float(Tabs[0]) * 1
 # CONVERSÕES PARA K
 Pabs = input('INFORME A PRESSÃO ABSOLUTA (Bar Pa Atm Torr mmHg Kgf/cm² Kgf/in² ou Psi) SEGUIDA COM A SIGLA E SEPARADO '
-             'POR ESPAÇO>> ').split(' ')
+             'POR ESPAÇO>> ').upper().split(' ')
 if Pabs[1] == "BAR":
     Pabs = float(Pabs[0]) * 100_000
 elif Pabs[1].upper() == "PA":
