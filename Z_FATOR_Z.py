@@ -49,7 +49,6 @@ if dg == 0:
             unit_Tc = [(float(dados) + 459.67) for dados in TC]
         elif unit_Tc.upper() == "K":
             unit_Tc = [float(dados) * 1.8 for dados in TC]
-
         # CONVERSÕES PARA R
 
         PC = input('INSIRA AS PRESSÕES CRÍTICAS P1 P2 P3>> ').split(' ')
@@ -71,7 +70,6 @@ if dg == 0:
             unit_Pc = [float(dados) * 2.205 for dados in PC]
         elif unit_Pc.upper() == "PSI":
             unit_Pc = [float(dados) for dados in PC]
-
         # CONVERSÕES PARA PSI
 
         PC = unit_Pc
@@ -102,7 +100,6 @@ elif Tabs[1].upper() == "F":
     Tabs = (float(Tabs[0]) + 459.67)
 elif Tabs[1].upper() == "K":
     Tabs = float(Tabs[0]) * 1.8
-
 # CONVERSÕES PARA R
 
 
@@ -125,7 +122,6 @@ elif Pabs[1].upper() == "KGF/IN2":
     Pabs = float(Pabs[0]) * 2.205
 elif Pabs[1].upper() == "PSI":
     Pabs = float(Pabs[0])
-
 # CONVERSÕES PARA PSI
 
 Ppr = Pabs/Ppc
@@ -152,6 +148,8 @@ def iterando_correlacoes(A1="HY", A2="DK"):
 
 
 print(iterando_correlacoes())
+
+
 """
 Caso:
 300 k

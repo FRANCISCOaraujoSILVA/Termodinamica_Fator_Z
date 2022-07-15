@@ -4,7 +4,6 @@ Usando newton-raphson
 """
 from sympy import *
 import math as M
-import time
 
 
 def correlacao_de_Brill_e_Beggs(Ppr, Tpr):
@@ -47,18 +46,18 @@ def correlacao_de_Hall_Yarborough(Ppr, Tpr):
     X1 = 0.06125 * t * M.exp(-1.2 * (1 - t)**2)
     X2 = 14.76 * t - 9.76 * t**2 + 4.58 * t**3
     X3 = 90.7 * t - 242.2 * t**2 + 42.4 * t**3
-    X4 = 2.18 + (2.82 * (t))
+    X4 = 2.18 + (2.82 * t)
 
     # Definindo a função simbólica
     Y = Symbol('Y')
-    fy = - X1 * Ppr + ((Y + Y**2 + Y**3 - Y**4) / (1 - Y)**3) - X2 * Y**2 + X3 * Y**(X4)
+    fy = - X1 * Ppr + ((Y + Y**2 + Y**3 - Y**4) / (1 - Y)**3) - X2 * Y**2 + X3 * Y**X4
     derivada = fy.diff(Y)
 
     # Definindo a derivada numérica
     fderivada = lambdify(Y, derivada, 'sympy')
 
     # Transformando a função numericamente
-    fy = lambda Y: - X1 * Ppr + ((Y + Y**2 + Y**3 - Y**4) / (1 - Y)**3) - X2 * Y**2 + X3 * Y**(X4)
+    fy = lambda Y: - X1 * Ppr + ((Y + Y**2 + Y**3 - Y**4) / (1 - Y)**3) - X2 * Y**2 + X3 * Y**X4
 
     parad = 0.00000000001
     maxit = 50000
@@ -85,6 +84,7 @@ def correlacao_dranchukabukassem(Ppr, Tpr, zc, x0):
     """
     A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11 = 0.3265, -1.0700, -0.5339, 0.01569, -0.05165, 0.5475, -0.7361, \
                                                    0.1844, 0.1056, 0.6134, 0.7210
+    # Função Objetivo
     F = lambda z: 1 + (A1 + A2 / Tpr + A3 / Tpr ** 3 + A4 / Tpr ** 4 + A5 / Tpr ** 5) * ((zc * Ppr) / (z * Tpr)) + (
                 A6 + A7 / Tpr + A8 / Tpr ** 2) * \
                   ((zc * Ppr) / (z * Tpr)) ** 2 - A9 * (A7 / Tpr + A8 / Tpr ** 2) * ((zc * Ppr) / (z * Tpr)) ** 5 + \
