@@ -1,6 +1,6 @@
 """
 Correlação para fator de COMPRESSIBILIDADE ISOTÉRMICO
-Usando newton-raphson
+Usando o Método de Newton-Raphson e Secante Modificada
 """
 from sympy import *
 import math as M
@@ -9,7 +9,7 @@ import math as M
 def correlacao_de_Brill_e_Beggs(Ppr, Tpr):
     """
     :param Ppr: Pressão pseudoreduzida [adimensional]
-    :param Tpr: Temperatura pseudocrítica [adimensional]
+    :param Tpr: Temperatura pseudoreduzida [adimensional]
     :return: Fator de compressibilidade do gás
     """
     A = 1.39 * (Tpr - 0.92) ** 0.5 - 0.36 * Tpr - 0.101
@@ -24,13 +24,8 @@ def correlacao_de_Brill_e_Beggs(Ppr, Tpr):
 def correlacao_Papay(Ppr, Tpr):  # Essa correlação é simples mas tem suas limitações
     """
     :param Ppr: Pressão pseudoreduzida [adimensional]
-    :param Tpr: Temperatura pseudocrítica [adimensional]
+    :param Tpr: Temperatura pseudoreduzida [adimensional]
     :return: Fator de compressibilidade do gás
-
-    ? <Tpr< ?
-    ? <Ppr< ?
-
-    Desvantagens: ?
     """
     Z = 1 - ((3.53 * Ppr) / (10 ** (0.9813 * Tpr))) + ((0.274 * Ppr ** 2) / (10 ** (0.8157 * Tpr)))
     return Z
@@ -39,7 +34,7 @@ def correlacao_Papay(Ppr, Tpr):  # Essa correlação é simples mas tem suas lim
 def correlacao_de_Hall_Yarborough(Ppr, Tpr):
     """
     :param Ppr: Pressão pseudoreduzida [adimensional]
-    :param Tpr: Temperatura pseudocrítica [adimensional]
+    :param Tpr: Temperatura pseudoreduzida [adimensional]
     :return: Fator de compressibilidade do gás
     """
     t = 1 / Tpr
@@ -77,8 +72,8 @@ def correlacao_de_Hall_Yarborough(Ppr, Tpr):
 def correlacao_dranchukabukassem(Ppr, Tpr, zc, x0):
     """
     :param Ppr: Pressão pseudoreduzida [adimensional]
-    :param Tpr: Temperatura pseudocrítica [adimensional]
-    :param zc: z crítico. Fornecido pelo usuário?
+    :param Tpr: Temperatura pseudoreduzida [adimensional]
+    :param zc: z crítico (metano)
     :param x0: Valor que zera função objetivo
     :return: Fator de compressibilidade do gás
     """
@@ -101,7 +96,7 @@ def correlacao_dranchukabukassem(Ppr, Tpr, zc, x0):
         iter += 1
         xold = x0
         x0 = xold - ((Pert * xold * F(xold)) / (F(xold + Pert * xold) - F(x0)))
-        Erro = ((xold - x0) / xold) * 100  # verificar se o erro deve estar em porcentagem ou se é muito grande
+        Erro = ((xold - x0) / xold) * 100
         if Erro <= Parad or iter >= maxit:
             break
     z = x0
