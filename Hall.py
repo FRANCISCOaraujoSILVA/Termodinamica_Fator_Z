@@ -48,9 +48,12 @@ def correlacao_de_Hall_Yarborough(Ppr, Tpr):
     maxit = 50000
     iter = 0
     x0 = (X1 * Ppr)/correlacao_Papay(Ppr, Tpr)
+
     """
-    O melhor chute, basta fazer o passo contrário do Z = (X1 * Ppr) / x0 e isolar x0
-    O melhor valor de z pode ser encontrado pela correlação do Papay
+    O melhor chute: basta fazer o passo contrário do "Z = (X1 * Ppr) / x0" e isolar x0.
+    O melhor valor de z pode ser encontrado pela correlação do Papay.
+    Com isso, com esse valor de x0 podemos entrar no laço e encontrar o melhor valor de Y, para enfim, encontrar
+    O valor de Z.
     """
 
     F = lambda Y: - X1 * Ppr + ((Y + Y ** 2 + Y ** 3 - Y ** 4) / (1 - Y) ** 3) - X2 * Y ** 2 + X3 * Y ** X4
