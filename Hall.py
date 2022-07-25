@@ -47,7 +47,7 @@ def correlacao_de_Hall_Yarborough(Ppr, Tpr):
     Parad = 10 ** -11
     maxit = 5000
     iter = 0
-    x0 = (X1 * Ppr)/correlacao_de_Brill_e_Beggs(Ppr, Tpr)  # Podemos usar a correlação de Papay também!
+    x0 = (X1 * Ppr)/correlacao_de_Brill_e_Beggs(Ppr, Tpr)  # Podemos usar a correlação de Papay também!!!
 
     """
     O melhor chute: basta fazer o passo contrário do "Z = (X1 * Ppr) / x0" e isolar x0.
