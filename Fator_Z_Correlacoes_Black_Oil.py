@@ -5,6 +5,15 @@ Usando o Método de Newton-Raphson e Secante Modificada
 from sympy import *
 import math as M
 
+def correlacao_Papay(Ppr, Tpr):  # Essa correlação é simples mas tem suas limitações
+    """
+    :param Ppr: Pressão pseudoreduzida [adimensional]
+    :param Tpr: Temperatura pseudoreduzida [adimensional]
+    :return: Fator de compressibilidade do gás
+    """
+    Z = 1 - ((3.53 * Ppr) / (10 ** (0.9813 * Tpr))) + ((0.274 * Ppr ** 2) / (10 ** (0.8157 * Tpr)))
+    return Z
+
 
 def correlacao_de_Brill_e_Beggs(Ppr, Tpr):
     """
@@ -19,16 +28,6 @@ def correlacao_de_Brill_e_Beggs(Ppr, Tpr):
     D = 10 ** (0.3106 - 0.49 * Tpr + 0.1824 * Tpr ** 2)
     Z = A + ((1 - A) / M.exp(B)) + C * Ppr ** D
     return f'FATOR Z PELA CORRELAÇÃO DE BRILL E BEGGS>> {Z}'
-
-
-def correlacao_Papay(Ppr, Tpr):  # Essa correlação é simples mas tem suas limitações
-    """
-    :param Ppr: Pressão pseudoreduzida [adimensional]
-    :param Tpr: Temperatura pseudoreduzida [adimensional]
-    :return: Fator de compressibilidade do gás
-    """
-    Z = 1 - ((3.53 * Ppr) / (10 ** (0.9813 * Tpr))) + ((0.274 * Ppr ** 2) / (10 ** (0.8157 * Tpr)))
-    return Z
 
 
 def correlacao_de_Hall_Yarborough(Ppr, Tpr):
