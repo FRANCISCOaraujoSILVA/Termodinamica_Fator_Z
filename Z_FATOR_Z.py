@@ -1,4 +1,5 @@
-from Fator_Z_Correlacoes_Black_Oil import *
+# from Fator_Z_Correlacoes_Black_Oil import *
+from Hall import *
 variavel = 'variavel'
 dg = float(input('SE A GRAVIDADE ESPECÍFICA (DG) FOR CONHECIDA INFORME SEU VALOR! CASO CONTRÁRIO, DIGITE "0">> '))
 
@@ -129,6 +130,7 @@ Tpr = Tabs/Tpc
 
 
 def iterando_correlacoes(A1="HY", A2="DK"):
+
     if A2 == "DK":
         if 1 < Tpr < 3 and 0.2 < Ppr < 30:
             x0 = correlacao_Papay(Ppr, Tpr)

@@ -1,6 +1,6 @@
 """
 Correlação para fator de COMPRESSIBILIDADE ISOTÉRMICO
-Usando o Método de Newton-Raphson e Secante Modificada
+Ambos os casos usando o método da Secante Modificada de forma discreta
 """
 from sympy import *
 import math as M
@@ -43,29 +43,25 @@ def correlacao_de_Hall_Yarborough(Ppr, Tpr):
     X3 = 90.7 * t - 242.2 * t**2 + 42.4 * t**3
     X4 = 2.18 + (2.82 * t)
 
-    # Definindo a função simbólica
-    Y = Symbol('Y')
-    fy = - X1 * Ppr + ((Y + Y**2 + Y**3 - Y**4) / (1 - Y)**3) - X2 * Y**2 + X3 * Y**X4
-    derivada = fy.diff(Y)
-
-    # Definindo a derivada numérica
-    fderivada = lambdify(Y, derivada, 'sympy')
-
-    # Transformando a função numericamente
-    fy = lambda Y: - X1 * Ppr + ((Y + Y**2 + Y**3 - Y**4) / (1 - Y)**3) - X2 * Y**2 + X3 * Y**X4
-
-    parad = 0.00000000001
+    Pert = 10 ** -6
+    Parad = 10 ** -11
     maxit = 50000
     iter = 0
-    xr = 0.1  # 1ºchute
+    x0 = (X1 * Ppr)/correlacao_Papay(Ppr, Tpr)
+    """
+    O melhor chute, basta fazer o passo contrário do Z = (X1 * Ppr) / x0 e isolar x0
+    O melhor valor de z pode ser encontrado pela correlação do Papay
+    """
 
+    F = lambda Y: - X1 * Ppr + ((Y + Y ** 2 + Y ** 3 - Y ** 4) / (1 - Y) ** 3) - X2 * Y ** 2 + X3 * Y ** X4
     while True:
-        xold = xr
-        xr = xr - ((fy(xr))/(fderivada(xr)))
-        epest = abs((xold - xr)/xold) * 100
-        if epest <= parad or iter >= maxit:
+        iter += 1
+        xold = x0
+        x0 = xold - ((Pert * xold * F(xold)) / (F(xold + Pert * xold) - F(x0)))
+        Erro = ((xold - x0) / xold) * 100
+        if Erro <= Parad or iter >= maxit:
             break
-    Z = (X1 * Ppr) / xr
+    Z = (X1 * Ppr) / x0
     return f'FATOR Z PELA CORRELAÇÃO DE HALL-YARBOROUGH>> {Z}'
 
 
