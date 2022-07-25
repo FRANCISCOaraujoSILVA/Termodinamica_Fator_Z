@@ -18,7 +18,7 @@ def correlacao_de_Brill_e_Beggs(Ppr, Tpr):
     C = 0.132 - 0.32 * M.log10(Tpr)
     D = 10 ** (0.3106 - 0.49 * Tpr + 0.1824 * Tpr ** 2)
     Z = A + ((1 - A) / M.exp(B)) + C * Ppr ** D
-    return f'FATOR Z PELA CORRELAÇÃO DE BRILL E BEGGS>> {Z}'
+    return Z
 
 
 def correlacao_Papay(Ppr, Tpr):  # Essa correlação é simples mas tem suas limitações
@@ -45,15 +45,15 @@ def correlacao_de_Hall_Yarborough(Ppr, Tpr):
 
     Pert = 10 ** -6
     Parad = 10 ** -11
-    maxit = 50000
+    maxit = 5000
     iter = 0
-    x0 = (X1 * Ppr)/correlacao_Papay(Ppr, Tpr)  # Podemos usar a correlação de Brill e Beggs também!
+    x0 = (X1 * Ppr)/correlacao_de_Brill_e_Beggs(Ppr, Tpr)  # Podemos usar a correlação de Brill e Beggs também!
 
     """
     O melhor chute: basta fazer o passo contrário do "Z = (X1 * Ppr) / x0" e isolar x0.
-    O melhor valor de z pode ser encontrado pela correlação do Papay.
+    O melhor valor de z pode ser encontrado pela correlação de Brill e Beggs (se ajustou melhor).
     Com isso, com esse valor de x0 podemos entrar no laço e encontrar o melhor valor de Y, para enfim, encontrar
-    O valor de Z.
+    o valor de Z.
     """
 
     F = lambda Y: - X1 * Ppr + ((Y + Y ** 2 + Y ** 3 - Y ** 4) / (1 - Y) ** 3) - X2 * Y ** 2 + X3 * Y ** X4
