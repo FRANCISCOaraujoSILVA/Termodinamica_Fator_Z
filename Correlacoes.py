@@ -47,14 +47,7 @@ def correlacao_de_Hall_Yarborough(Ppr, Tpr):
     Parad = 10 ** -11
     maxit = 5000
     iter = 0
-    x0 = (X1 * Ppr)/correlacao_de_Brill_e_Beggs(Ppr, Tpr)  # Podemos usar a correlação de Papay também!!!
-
-    """
-    O melhor chute: basta fazer o passo contrário do "Z = (X1 * Ppr) / x0" e isolar x0.
-    O melhor valor de z pode ser encontrado pela correlação de Brill e Beggs (se ajustou melhor).
-    Com isso, com esse valor de x0 podemos entrar no laço e encontrar o melhor valor de Y, para enfim, encontrar
-    o valor de Z.
-    """
+    x0 = 0.20
 
     F = lambda Y: - X1 * Ppr + ((Y + Y ** 2 + Y ** 3 - Y ** 4) / (1 - Y) ** 3) - X2 * Y ** 2 + X3 * Y ** X4
     while True:

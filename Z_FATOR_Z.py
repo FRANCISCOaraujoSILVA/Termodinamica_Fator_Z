@@ -1,4 +1,3 @@
-# from Fator_Z_Correlacoes_Black_Oil import *
 from Correlacoes import *
 variavel = 'variavel'
 dg = float(input('SE A GRAVIDADE ESPECÍFICA (DG) FOR CONHECIDA INFORME SEU VALOR! CASO CONTRÁRIO, DIGITE "0">> '))
